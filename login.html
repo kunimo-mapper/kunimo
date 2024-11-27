@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page with Navbar</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Page Background */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Navbar Container */
+    .navbar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4CAF50;
+      padding: 20px 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Brand Logo */
+    .navbar .logo {
+      color: #fff;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    /* Navbar Links */
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+    }
+
+    .navbar ul li {
+      margin: 0 15px;
+    }
+
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    /* Responsive Toggle Button (Hamburger) */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 30px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px;
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .navbar ul {
+        display: none; /* Hide the menu initially */
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .navbar ul li {
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      .menu-toggle {
+        display: flex; /* Show the hamburger menu */
+      }
+
+      /* Toggle menu display */
+      .navbar.active ul {
+        display: flex; /* Show menu on toggle */
+      }
+    }
+
+    /* Login Container */
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 80px; /* Push down the container below the navbar */
+    }
+
+    /* Form Header */
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Form Styling */
+    .login-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-container input {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .login-container button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive Design for Login Container */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Structure -->
+  <nav class="navbar">
+    <a href="#" class="logo">Zadzidzidzi</a>
+  <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="create-project.html">Create Project</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+      <li><a href="login">Login</a></li>
+    </ul>
+    <!-- Hamburger Icon -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <!-- Login Container -->
+  <div class="login-container">
+    <h2>Login</h2>
+    <form action="#" method="POST">
+      <input type="text" placeholder="Username" name="username" required>
+      <input type="password" placeholder="Password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    // Toggle the menu display on mobile view
+    function toggleMenu() {
+      const navbar = document.querySelector('.navbar');
+      navbar.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
