@@ -12,6 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body, html { height: 100%; width: 100%; overflow: hidden; background-color: #000; }
 
+        /* --- Header --- */
         header {
             background-color: #1a252f; color: white; padding: 0 40px; height: 70px;
             display: flex; align-items: center; justify-content: space-between; 
@@ -20,16 +21,28 @@
         .logo a { text-decoration: none; color: white; display: flex; align-items: center; gap: 10px; }
         .logo h2 { letter-spacing: 2px; font-weight: 800; }
         
+        .nav-tabs { display: flex; gap: 25px; list-style: none; }
+        .nav-tabs a { 
+            color: #ecf0f1; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-tabs a:hover { color: #4CAF50; }
+
+        /* --- Map Container --- */
         #map-container { position: relative; height: calc(100vh - 70px); width: 100%; }
         #map { height: 100%; width: 100%; z-index: 1; }
 
-        /* --- LIVE MAP STICKER WITH CLOCK --- */
+        /* --- LIVE MAP STICKER --- */
         .live-status-bar {
             position: absolute;
             top: 20px;
             right: 20px;
             z-index: 2000;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
@@ -43,27 +56,16 @@
         }
 
         .live-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            font-size: 14px;
-            color: #ff4d4d;
+            display: flex; align-items: center; gap: 8px;
+            font-weight: bold; font-size: 14px; color: #ff4d4d;
             text-transform: uppercase;
         }
 
-        #live-clock {
-            font-size: 13px;
-            color: #ecf0f1;
-            letter-spacing: 0.5px;
-        }
+        #live-clock { font-size: 13px; color: #ecf0f1; letter-spacing: 0.5px; }
 
         .live-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #ff4d4d;
-            border-radius: 50%;
-            animation: pulse-red 1.5s infinite;
+            width: 8px; height: 8px; background-color: #ff4d4d;
+            border-radius: 50%; animation: pulse-red 1.5s infinite;
         }
 
         @keyframes pulse-red {
@@ -94,13 +96,28 @@
             position: absolute; bottom: 30px; left: 20px; z-index: 1000;
             background: white; border: 1px solid #ccc; padding: 12px 20px;
             cursor: pointer; border-radius: 8px; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo"><a href="index.html"><i class="fas fa-water" style="color:#4CAF50;"></i><h2>KUNIMO</h2></a></div>
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-water" style="color:#4CAF50;"></i>
+                <h2>KUNIMO</h2>
+            </a>
+        </div>
+        <nav>
+            <ul class="nav-tabs">
+                <li><a href="index.html" style="color: #4CAF50;">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div id="map-container">
@@ -118,16 +135,12 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Real-Time Clock Function
+        // Clock functionality
         function updateClock() {
             const now = new Date();
             const options = { 
-                day: '2-digit', 
-                month: 'short', 
-                year: 'numeric', 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit',
+                day: '2-digit', month: 'short', year: 'numeric', 
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
                 hour12: false 
             };
             document.getElementById('live-clock').textContent = now.toLocaleString('en-GB', options).replace(',', ' |');
@@ -155,9 +168,9 @@
             const m1 = L.marker(dwangwa, { icon: breathingPin }).addTo(map).bindPopup("<b>Dwangwa Flooding</b>");
             const m2 = L.marker(kasungu, { icon: breathingPin }).addTo(map).bindPopup("<b>Kasungu Flooding</b>");
 
+            const group = L.featureGroup([m1, m2]);
             window.recenterMap = function() {
-                const group = L.featureGroup([m1, m2]);
-                map.flyToBounds(group.getBounds(), { padding: [100, 100] });
+                map.flyToBounds(group.getBounds(), { padding: [100, 100], duration: 1.5 });
             };
             
             setTimeout(() => { map.invalidateSize(); }, 500);
