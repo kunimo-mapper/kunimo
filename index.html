@@ -6,156 +6,76 @@
     <title>KUNIMO | Dwangwa Satellite GIS</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <style>
         /* --- General Reset --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body, html { height: 100%; width: 100%; overflow: hidden; display: flex; flex-direction: column; background-color: #000; }
 
-        body, html {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            background-color: #000;
-        }
-
-        /* --- Header Styling --- */
+        /* --- Header --- */
         header {
-            background-color: #1a252f;
-            color: white;
-            padding: 0 40px;
-            height: 70px;
+            background-color: #1a252f; color: white; padding: 0 40px; height: 70px;
+            display: flex; align-items: center; justify-content: space-between; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.6); z-index: 2000;
+        }
+        .logo a { text-decoration: none; color: white; display: flex; align-items: center; gap: 10px; }
+        .logo h2 { letter-spacing: 2px; font-weight: 800; }
+
+        /* --- Navigation --- */
+        .nav-tabs { display: flex; gap: 25px; list-style: none; }
+        .nav-tabs a { color: #ecf0f1; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; transition: 0.3s; }
+        .nav-tabs a:hover { color: #4CAF50; }
+
+        /* --- Map --- */
+        #map { flex-grow: 1; width: 100%; z-index: 1; }
+
+        /* --- Custom Flood Marker Style --- */
+        .flood-marker-icon {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            border-radius: 50%;
             display: flex;
-            align-items: center; 
-            justify-content: space-between; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.6);
-            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            color: #e74c3c;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+            animation: pulse 2s infinite;
         }
 
-        /* Logo Link Styling */
-        .logo a {
-            text-decoration: none;
-            color: white;
-            transition: opacity 0.2s;
-        }
-        
-        .logo a:hover {
-            opacity: 0.8;
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
         }
 
-        .logo h2 {
-            margin: 0;
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-
-        /* --- Navigation Tabs --- */
-        .nav-tabs {
-            display: flex;
-            gap: 25px; 
-            list-style: none;
-        }
-
-        .nav-tabs a {
-            color: #ecf0f1;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-tabs a:hover {
-            color: #4CAF50;
-            border-bottom: 2px solid #4CAF50;
-        }
-
-        /* --- Map Container --- */
-        #map { 
-            flex-grow: 1;
-            width: 100%;
-            z-index: 1;
-        }
-
-        /* --- Custom UI Components --- */
         .recenter-btn {
-            position: absolute;
-            bottom: 30px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            border: 2px solid rgba(0,0,0,0.2);
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            position: absolute; bottom: 30px; left: 20px; z-index: 1000;
+            background: white; border: 2px solid rgba(0,0,0,0.2); padding: 10px 15px;
+            cursor: pointer; border-radius: 4px; font-weight: bold;
         }
 
-        .recenter-btn:hover { background: #f4f4f4; }
-
-        /* --- Mobile Responsive Toggle --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-toggle div {
-            width: 25px;
-            height: 3px;
-            background-color: #fff;
-            margin: 4px;
-            transition: 0.3s;
-        }
-
-        @media (max-width: 950px) {
-            header { padding: 0 20px; }
-            .nav-tabs {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: #1a252f;
-                padding: 20px;
-                gap: 15px;
-                text-align: center;
-            }
-            .nav-tabs.active { display: flex; }
-            .menu-toggle { display: flex; }
-        }
+        @media (max-width: 950px) { .nav-tabs { display: none; } }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">
-            <a href="index.html"><h2>KUNIMO</h2></a>
+            <a href="index.html">
+                <i class="fas fa-water" style="color: #4CAF50; font-size: 20px;"></i>
+                <h2>KUNIMO</h2>
+            </a>
         </div>
-        
         <nav>
-            <ul class="nav-tabs" id="nav-menu">
+            <ul class="nav-tabs">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="contribute.html">Contribute</a></li>
                 <li><a href="account.html">Account</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <div></div><div></div><div></div>
-            </div>
         </nav>
     </header>
 
@@ -163,45 +83,38 @@
     <button class="recenter-btn" onclick="recenterMap()">RE-CENTER DWANGWA</button>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
     <script>
         const dwangwaCoords = [-12.518, 34.135];
         const defaultZoom = 14;
 
-        const map = L.map('map', {
-            zoomControl: true
-        }).setView(dwangwaCoords, defaultZoom);
+        const map = L.map('map').setView(dwangwaCoords, defaultZoom);
 
-        const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        // Satellite Base Layer
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri'
         }).addTo(map);
 
-        const labels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; CartoDB',
-            pane: 'markerPane' 
-        }).addTo(map);
-
-        const marker = L.marker(dwangwaCoords).addTo(map);
-        marker.bindPopup("<b style='color:#e74c3c;'>Active flooding</b><br>There is active flooding in Dwangwa, Malawi").openPopup();
-
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+        // Custom Flood Symbol Marker
+        const floodIcon = L.divIcon({
+            html: '<i class="fas fa-house-flood-water"></i>',
+            className: 'flood-marker-icon',
+            iconSize: [40, 40],
+            iconAnchor: [20, 20]
         });
+
+        const marker = L.marker(dwangwaCoords, { icon: floodIcon }).addTo(map);
+        
+        marker.bindPopup(`
+            <div style="text-align:center;">
+                <b style="color:#e74c3c;">URGENT: Active Flooding</b><br>
+                Area around Dwangwa is currently impacted.<br>
+                <small>Confirmed via Open Mapping Community</small>
+            </div>
+        `).openPopup();
 
         function recenterMap() {
-            map.flyTo(dwangwaCoords, defaultZoom, {
-                duration: 1.5
-            });
+            map.flyTo(dwangwaCoords, defaultZoom, { duration: 1.5 });
         }
-
-        document.querySelectorAll('.nav-tabs a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-            });
-        });
     </script>
 </body>
 </html>
