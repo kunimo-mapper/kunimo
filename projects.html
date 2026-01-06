@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUNIMO | Projects</title>
+    <style>
+        /* --- General Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header Styling --- */
+        header {
+            background-color: #1a252f;
+            color: white;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a { text-decoration: none; color: white; }
+        .logo h2 { letter-spacing: 2px; font-weight: 800; }
+
+        .nav-tabs { display: flex; gap: 25px; list-style: none; }
+        .nav-tabs a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 8px 0;
+            transition: 0.3s;
+        }
+        .nav-tabs a:hover { color: #4CAF50; }
+
+        /* --- Project Tab Controls --- */
+        .project-controls {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: bold;
+            color: #7f8c8d;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background-color: #4CAF50;
+        }
+
+        /* --- Content Sections --- */
+        .container {
+            max-width: 800px;
+            width: 95%;
+            margin: 40px auto;
+            flex-grow: 1;
+        }
+
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Project Card Styling --- */
+        .project-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 6px solid #4CAF50;
+        }
+        .past-project { border-left-color: #95a5a6; }
+        
+        .project-card h3 { color: #2c3e50; margin-bottom: 8px; }
+        .project-card p { color: #7f8c8d; line-height: 1.5; margin-bottom: 5px; }
+        .project-card .tag { 
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* --- Form Styling --- */
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 { margin-bottom: 20px; color: #1a252f; text-align: center; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #34495e; }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover { background-color: #45a049; }
+
+        .login-gate {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border: 2px dashed #bdc3c7;
+            border-radius: 12px;
+        }
+
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+        .menu-toggle div { width: 25px; height: 3px; background-color: #fff; margin: 4px; }
+
+        @media (max-width: 950px) {
+            .nav-tabs { display: none; }
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><h2>KUNIMO</h2></a>
+        </div>
+        <nav>
+            <ul class="nav-tabs" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html" style="color: #4CAF50;">Projects</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMobileMenu()">
+                <div></div><div></div><div></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="project-controls">
+        <button class="tab-btn active" onclick="showSection('active-projects', this)">Active</button>
+        <button class="tab-btn" onclick="showSection('past-projects', this)">Past</button>
+        <button class="tab-btn" onclick="showSection('create-project', this)">+ New Project</button>
+    </div>
+
+    <div class="container">
+        <div id="active-projects" class="section active">
+            <div class="project-card">
+                <h3>2025 Flooding in Nkhotakota</h3>
+                <p><strong>Location:</strong> Dwangwa Area</p>
+                <p>Ongoing real-time monitoring of flooding impacts in Nkhotakota district.</p>
+                <span class="tag">ACTIVE MONITORING</span>
+            </div>
+            <div class="project-card">
+                <h3>2025 Flooding in Kasungu</h3>
+                <p><strong>Location:</strong> Kasungu, along M1 road</p>
+                <p>Ongoing real-time monitoring of flooding and road accessibility in Kasungu.</p>
+                <span class="tag">ACTIVE MONITORING</span>
+            </div>
+        </div>
+
+        <div id="past-projects" class="section">
+            <div class="project-card past-project">
+                <h3>2023 Cyclone Freddy Flooding</h3>
+                <p><strong>Location:</strong> Southern Malawi</p>
+                <p><strong>Status:</strong> Archived October 2023</p>
+                <p>Retrospective monitoring and damage assessment of flooding in Southern Malawi caused by Cyclone Freddy.</p>
+                <span class="tag" style="background:#eee; color:#666;">COMPLETED</span>
+            </div>
+
+            <div class="project-card past-project">
+                <h3>2024 Flooding in Nkhotakota</h3>
+                <p><strong>Location:</strong> Nkhotakota Coastal Zones</p>
+                <p><strong>Status:</strong> Archived June 2024</p>
+                <p>Analysis of inland flooding and lake-level rise impacts.</p>
+                <span class="tag" style="background:#eee; color:#666;">COMPLETED</span>
+            </div>
+        </div>
+
+        <div id="create-project" class="section">
+            <div id="auth-wall" class="login-gate">
+                <h3>Account Required</h3>
+                <p>To ensure data integrity, only registered users can propose new GIS projects.</p>
+                <br>
+                <p>Please <a href="account.html" style="color: #4CAF50; text-decoration: none; font-weight: bold;">Login</a> or <a href="account.html" style="color: #4CAF50; text-decoration: none; font-weight: bold;">Create an Account</a> to continue.</p>
+            </div>
+
+            <div id="actual-form" class="form-container" style="display: none;">
+                <h2>Propose New Project</h2>
+                <form onsubmit="event.preventDefault(); alert('Project Submitted for Review!');">
+                    <label>Project Title</label>
+                    <input type="text" placeholder="Name of your project" required>
+                    <label>Exact Location</label>
+                    <input type="text" placeholder="GPS coordinates or Area Name" required>
+                    <label>Organization / Affiliation</label>
+                    <input type="text" placeholder="Who is leading this?" required>
+                    <label>Keywords</label>
+                    <input type="text" placeholder="e.g. Flood, Mapping, Survey">
+                    <button type="submit" class="submit-btn">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('nav-menu');
+            if (menu.style.display === 'flex') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+                menu.style.flexDirection = 'column';
+                menu.style.position = 'absolute';
+                menu.style.top = '70px';
+                menu.style.left = '0';
+                menu.style.width = '100%';
+                menu.style.backgroundColor = '#1a252f';
+                menu.style.padding = '20px';
+                menu.style.zIndex = '3000';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUNIMO | About Us</title>
+    <style>
+        /* --- General Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        /* --- Header Styling --- */
+        header {
+            background-color: #1a252f;
+            color: white;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a { text-decoration: none; color: white; }
+        .logo h2 { letter-spacing: 2px; font-weight: 800; }
+
+        .nav-tabs { display: flex; gap: 25px; list-style: none; }
+        .nav-tabs a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 8px 0;
+            transition: 0.3s;
+        }
+        .nav-tabs a:hover { color: #4CAF50; }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(26, 37, 47, 0.7), rgba(26, 37, 47, 0.7)), 
+                        url('https://trustafrica.org/wp-content/uploads/2023/07/cyclone-freddy.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .hero p { font-size: 1.3rem; max-width: 850px; margin: 0 auto; opacity: 0.95; font-weight: 300; }
+
+        /* --- Content Layout --- */
+        .content-section {
+            max-width: 900px;
+            margin: -50px auto 60px auto; 
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-block {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        h2 { color: #1a252f; margin-bottom: 25px; border-left: 6px solid #4CAF50; padding-left: 15px; }
+        p { margin-bottom: 20px; font-size: 1.1rem; color: #444; text-align: justify; }
+
+        .highlight-box {
+            background-color: #f1f8e9;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 35px 0;
+            font-style: italic;
+            border-left: 6px solid #2e7d32;
+            font-size: 1.15rem;
+            color: #1b5e20;
+        }
+
+        /* Publication Link Styling */
+        .pub-link {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid #2e7d32;
+            transition: 0.2s;
+        }
+        .pub-link:hover {
+            background-color: #e8f5e9;
+        }
+
+        /* --- Image Styling --- */
+        .image-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .image-caption {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .cta-footer {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #1a252f;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 40px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #45a049; transform: translateY(-3px); }
+
+        /* --- Mobile Toggle --- */
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+        .menu-toggle div { width: 25px; height: 3px; background-color: #fff; margin: 4px; }
+
+        @media (max-width: 768px) {
+            .nav-tabs { display: none; }
+            .menu-toggle { display: flex; }
+            .hero h1 { font-size: 2.2rem; }
+            .story-block { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><h2>KUNIMO</h2></a>
+        </div>
+        <nav>
+            <ul class="nav-tabs" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contribute.html">Contribute</a></li>
+                <li><a href="account.html">Account</a></li>
+                <li><a href="about.html" style="color: #4CAF50;">About</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMobileMenu()">
+                <div></div><div></div><div></div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Our Story</h1>
+        <p>Turning social media data into disaster resilience for Malawi.</p>
+    </section>
+
+    <main class="content-section">
+        <div class="story-block">
+            <h2>The Genesis: Cyclone Freddy</h2>
+            <p>
+                Early thoughts for this platform emerged during the dark days of <strong>Tropical Cyclone Freddy</strong>, one of the most devastating tropical cyclones to hit Southern Africa. As the storm caused widespread flooding, mudslides, and landslides, the open mapping community in Malawi identified a critical "missed opportunity" in how disaster data was being captured.
+            </p>
+            <p>
+                While social media holds immense potential for real-time disaster response, it became evident that a dedicated platform for crowdsourcing the harvesting of social media feeds was missing. This framework and the underlying research were later published in the 
+                <a href="https://onlinelibrary.wiley.com/doi/10.1111/jfr3.12938" target="_blank" class="pub-link">Journal of Flood Risk Management</a>.
+            </p>
+
+            <div class="highlight-box">
+                "There is an African Proverb that says: 'If you want to go fast, go alone; but if you want to go far, we have to go together.' 
+                <br><br>
+                In flood response life or death depends on how quick we respond, to harvest social media data it is currently tedious and we must work together to generate tangible information that can be used by response teams."
+            </div>
+
+            <h2>The Nkhotakota Realization</h2>
+            <p>
+                In early 2024, the necessity of an automated system was starkly highlighted. <strong>Mr. Patrick Kalonde</strong> and his colleague, <strong>Dr. Precious Mastala</strong> (a veterinary doctor), attempted to manually harvest social media feeds following the February 28 floods in Nkhotakota. 
+            </p>
+            <p>
+                The exercise proved that manual monitoring is too laborious to scale during a crisis. The experience reinforced that a platform to quickly identify damage and inform responders is no longer a luxury, but a necessity.
+            </p>
+
+            <h2>Building the Foundation</h2>
+            <p>
+                In November 2024, a hackathon was organized at the <strong>Malawi University of Business and Applied Sciences (MUBAS)</strong>. The primary goal was to develop the technical foundation for a platform that could achieve rapid social media harvesting and geolocation. Participants suggested names and the name KUNIMO, which stands for 'Kuthana ndi Madzi Osefukira' (dealing with flood water)  was voted for
+            </p>
+
+            <div class="image-container">
+                <img src="graphics/hackathon.jpg" alt="MUBAS Hackathon">
+                <div class="image-caption">Developers collaborating at the MUBAS Hackathon, November 2024.</div>
+            </div>
+
+            <p>
+                After the initial development at the hackathon, interest in operationalizing KUNIMO re-emerged in <strong>December 2025</strong>. As flooding remains a recurring threat, our mission is to ensure this platform remains minimum usable and openly accessible.
+            </p>
+            
+            <p style="font-weight: bold; border-top: 1px solid #eee; padding-top: 25px; color: #1a252f;">
+                KUNIMO is an open project. Anyone can contribute, improve the code, and help us build a more resilient Malawi.
+            </p>
+        </div>
+    </main>
+
+    <footer class="cta-footer">
+        <h3>Join the Community</h3>
+        <p>Help us turn social media data into life-saving information.</p>
+        <a href="contribute.html" class="btn">Contribute to KUNIMO</a>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('nav-menu');
+            if (menu.style.display === 'flex') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+                menu.style.flexDirection = 'column';
+                menu.style.position = 'absolute';
+                menu.style.top = '70px';
+                menu.style.left = '0';
+                menu.style.width = '100%';
+                menu.style.backgroundColor = '#1a252f';
+                menu.style.padding = '20px';
+                menu.style.zIndex = '3000';
+            }
+        }
+    </script>
+</body>
+</html>
